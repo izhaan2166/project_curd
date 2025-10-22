@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav th:fragment="navigation" class="main-nav">
+        <div class="nav-content">
+            <div class="nav-left">
+                <a href="/home" class="nav-link" th:classappend="${currentPage == 'home'} ? 'active'" title="Dashboard">
+                    <i class="fas fa-home nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="/analytics" class="nav-link" th:classappend="${currentPage == 'analytics'} ? 'active'" title="Analytics">
+                    <i class="fas fa-chart-bar nav-icon"></i>
+                    <span class="nav-text">Analytics</span>
+                </a>
+                <a href="/task/new" class="nav-link" th:classappend="${currentPage == 'task-form'} ? 'active'" title="New Task">
+                    <i class="fas fa-plus nav-icon"></i>
+                    <span class="nav-text">New Task</span>
+                </a>
+                <a href="/about" class="nav-link" th:classappend="${currentPage == 'about'} ? 'active'" title="About">
+                    <i class="fas fa-info-circle nav-icon"></i>
+                    <span class="nav-text">About</span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="/settings" class="nav-link" th:classappend="${currentPage == 'settings'} ? 'active'" title="Settings">
+                    <i class="fas fa-cog nav-icon"></i>
+                    <span class="nav-text">Settings</span>
+                </a>
+                <a href="/profile" class="nav-link" th:classappend="${currentPage == 'profile'} ? 'active'" title="Profile">
+                    <i class="fas fa-user nav-icon"></i>
+                    <span class="nav-text">Profile</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            navLinks.classList.toggle('show');
+            menuToggle.classList.toggle('active');
+            
+            // Add menu-open class to body to prevent scrolling
+            document.body.classList.toggle('menu-open');
+            
+            // Handle click outside to close menu
+            function closeMenu(event) {
+                const isClickInsideNav = event.target.closest('.main-nav');
+                const isMenuToggle = event.target.closest('.menu-toggle');
+                
+                if (!isClickInsideNav && !isMenuToggle && navLinks.classList.contains('show')) {
+                    navLinks.classList.remove('show');
+                    menuToggle.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                    document.removeEventListener('click', closeMenu);
+                }
+            }
+            
+            if (navLinks.classList.contains('show')) {
+                setTimeout(() => {
+                    document.addEventListener('click', closeMenu);
+                }, 100);
+            }
+        }
+
+        // Initialize dark mode
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+            }
+
+            // Update dark mode when changed in settings
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'darkMode') {
+                    document.body.classList.toggle('dark-mode', event.newValue === 'true');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

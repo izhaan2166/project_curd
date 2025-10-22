@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Task Tracker</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 4rem 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            color: #e53e3e;
+            margin-bottom: 2rem;
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            color: #718096;
+            margin-bottom: 2rem;
+        }
+        
+        .back-home {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-home:hover {
+            background-color: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 2rem 1rem;
+            }
+            
+            .error-icon {
+                font-size: 3rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="error-page">
+    <div class="container">
+        <header class="header">
+            <h1>Task Tracker</h1>
+            <div th:replace="fragments/navigation :: navigation"></div>
+        </header>
+
+        <div class="error-container">
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            <h2 class="error-title" th:text="${status + ' - ' + error}">404 - Not Found</h2>
+            <p class="error-message" th:text="${message}">The page you're looking for doesn't exist.</p>
+            <a href="/home" class="back-home">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>

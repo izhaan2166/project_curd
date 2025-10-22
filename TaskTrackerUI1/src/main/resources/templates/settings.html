@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Task Tracker</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="settings-page">
+    <div class="container">
+        <header class="header">
+            <h1>Settings</h1>
+            <div th:replace="fragments/navigation :: navigation"></div>
+        </header>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <main class="main-content">
+            <div class="settings-grid">
+                <section class="settings-section">
+                    <h2>Display & Notifications</h2>
+                    <form th:action="@{/settings/save}" method="post" class="settings-form">
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="enableDarkMode" id="darkModeToggle" onchange="toggleDarkMode(this)">
+                                Enable Dark Mode
+                            </label>
+                        </div>
+                        <script>
+                            function toggleDarkMode(checkbox) {
+                                document.body.classList.toggle('dark-mode', checkbox.checked);
+                                localStorage.setItem('darkMode', checkbox.checked);
+                            }
+                            
+                            // Initialize dark mode from localStorage
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const darkMode = localStorage.getItem('darkMode') === 'true';
+                                document.getElementById('darkModeToggle').checked = darkMode;
+                                document.body.classList.toggle('dark-mode', darkMode);
+                            });
+                        </script>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="enableNotifications" id="notificationToggle" onchange="toggleNotifications(this)">
+                                Enable Browser Notifications
+                            </label>
+                            <p class="help-text">Get notifications when tasks are due</p>
+                        </div>
+                        <script>
+                            async function toggleNotifications(checkbox) {
+                                if (checkbox.checked) {
+                                    try {
+                                        const permission = await Notification.requestPermission();
+                                        if (permission === "granted") {
+                                            localStorage.setItem('notifications', 'true');
+                                            showNotification('Notifications Enabled', 'You will now receive task notifications');
+                                        } else {
+                                            checkbox.checked = false;
+                                            alert('Please allow notifications in your browser settings');
+                                        }
+                                    } catch (error) {
+                                        console.error('Error requesting notification permission:', error);
+                                        checkbox.checked = false;
+                                    }
+                                } else {
+                                    localStorage.setItem('notifications', 'false');
+                                }
+                            }
+
+                            function showNotification(title, body) {
+                                if (Notification.permission === "granted") {
+                                    new Notification(title, {
+                                        body: body,
+                                        icon: '/favicon.ico'
+                                    });
+                                }
+                            }
+
+                            // Initialize notification settings
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const notificationsEnabled = localStorage.getItem('notifications') === 'true';
+                                document.getElementById('notificationToggle').checked = notificationsEnabled;
+                            });
+                        </script>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </form>
+                </section>
+
+                <section class="settings-section">
+                    <h2>Data Management</h2>
+                    <div class="settings-actions">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary dropdown-toggle" onclick="toggleExportMenu()">
+                                Export Data <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="exportMenu">
+                                <a href="/export/json" class="dropdown-item">Export as JSON</a>
+                                <a href="/export/csv" class="dropdown-item">Export as CSV</a>
+                            </div>
+                        </div>
+
+                        <form th:action="@{/import}" method="post" enctype="multipart/form-data" class="import-form">
+                            <input type="file" id="importFile" name="file" accept=".json,.csv" style="display: none;">
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('importFile').click()">
+                                Import Data
+                            </button>
+                        </form>
+
+                        <button onclick="if(confirm('Are you sure? This will delete all your tasks.')) clearAllTasks()" 
+                                class="btn btn-danger">Clear All Data</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script th:inline="javascript">
+        // Request notification permission when enabling notifications
+        document.querySelector('input[name="enableNotifications"]').addEventListener('change', function() {
+            if (this.checked) {
+                Notification.requestPermission();
+            }
+        });
+
+        // Handle file import
+        document.getElementById('importFile').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const formData = new FormData();
+                formData.append('file', this.files[0]);
+                
+                const form = this.closest('form');
+                form.submit();
+            }
+        });
+
+        function toggleExportMenu() {
+            document.getElementById('exportMenu').classList.toggle('show');
+        }
+
+        function clearAllTasks() {
+            fetch('/task/clear', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error clearing tasks');
+                    }
+                });
+        }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!e.target.matches('.dropdown-toggle')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let dropdown of dropdowns) {
+                    if (dropdown.classList.contains('show')) {
+                        dropdown.classList.remove('show');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

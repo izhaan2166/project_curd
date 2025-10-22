@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Task Tracker</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="analytics-page">
+    <div class="container">
+        <header class="header">
+            <h1>Task Analytics</h1>
+            <div th:replace="fragments/navigation :: navigation"></div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="analytics-grid">
+                <div class="chart-container">
+                    <h2>Task Status Distribution</h2>
+                    <canvas id="statusChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h2>Task Priority Distribution</h2>
+                    <canvas id="priorityChart"></canvas>
+                </div>
+
+                <div class="stats-container">
+                    <h2>Task Completion Rate</h2>
+                    <div class="completion-rate">
+                        <div class="progress-circle" th:data-percentage="${completionRate}">
+                            <span class="percentage" th:text="${completionRate + '%'}">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-container">
+                    <h2>Task Statistics</h2>
+                    <div class="stats-list">
+                        <div class="stat-item">
+                            <span class="stat-label">Average Completion Time:</span>
+                            <span class="stat-value" th:text="${averageCompletionTime}">0 days</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Tasks Created This Month:</span>
+                            <span class="stat-value" th:text="${tasksThisMonth}">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Tasks Completed This Month:</span>
+                            <span class="stat-value" th:text="${completedThisMonth}">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script th:inline="javascript">
+        const statusData = /*[[${statusData}]]*/ {};
+        const priorityData = /*[[${priorityData}]]*/ {};
+
+        // Status Chart
+        new Chart(document.getElementById('statusChart'), {
+            type: 'pie',
+            data: {
+                labels: Object.keys(statusData),
+                datasets: [{
+                    data: Object.values(statusData),
+                    backgroundColor: ['#ffd700', '#007bff', '#28a745']
+                }]
+            }
+        });
+
+        // Priority Chart
+        new Chart(document.getElementById('priorityChart'), {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(priorityData),
+                datasets: [{
+                    data: Object.values(priorityData),
+                    backgroundColor: ['#28a745', '#ffd700', '#dc3545']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

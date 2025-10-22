@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Task Tracker</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="about-page">
+    <div class="container">
+        <header class="header">
+            <h1>About Task Tracker</h1>
+            <div th:replace="fragments/navigation :: navigation"></div>
+        </header>
+
+        <main class="main-content">
+            <div class="about-grid">
+                <section class="about-section hero">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Task Tracker</h1>
+                        <p class="hero-subtitle">Your Complete Task Management Solution</p>
+                        <p class="hero-description">Task Tracker is a comprehensive task management application designed to help individuals and teams 
+                           organize their work efficiently. Built with Spring Boot and modern web technologies, it offers 
+                           a robust platform for tracking tasks, managing priorities, and analyzing productivity.</p>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-tasks"></i>
+                                <span>Easy Task Management</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Progress Analytics</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Smart Notifications</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="about-section features">
+                    <h2>Key Features</h2>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-tasks feature-icon"></i>
+                            <h3>Task Management</h3>
+                            <p>Create, update, and track tasks with ease. Set priorities, due dates, and status updates.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>Analytics Dashboard</h3>
+                            <p>Visualize your productivity with charts and statistics. Track completion rates and trends.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>Data Import/Export</h3>
+                            <p>Flexible data management with JSON and CSV support for importing and exporting tasks.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>Customizable Settings</h3>
+                            <p>Personalize your experience with customizable views and notification preferences.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="about-section">
+                    <h2>System Information</h2>
+                    <div class="system-info">
+                        <div class="info-item">
+                            <span class="info-label">Version:</span>
+                            <span class="info-value">1.0.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Last Updated:</span>
+                            <span class="info-value">October 17, 2025</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Database:</span>
+                            <span class="info-value">Local Storage (JSON)</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="about-section">
+                    <h2>Contact & Support</h2>
+                    <div class="contact-info">
+                        <p>For support and feedback, please contact:</p>
+                        <p class="email">support@tasktracker.com</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">GitHub</a>
+                            <a href="#" class="social-link">Twitter</a>
+                            <a href="#" class="social-link">LinkedIn</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "title": "exam",
+    "description": "Current Affairs: Stay updated with the latest news and trends, as many questions are derived from recent events.\r\nGeography: Understand physical geography, including mountains, rivers, and world maps.\r\nHistory: Cover significant historical events, including Ancient, Medieval, and Modern history, as well as important dates and their relevance.\r\nPolitics: Familiarize yourself with the Constitution, political history, and current political leaders in your country.\r\n",
+    "status": "IN_PROGRESS",
+    "priority": "MEDIUM",
+    "createdAt": "2025-10-19T20:17:28.686712900",
+    "updatedAt": "2025-10-19T20:17:43.246310",
+    "dueDate": "2025-10-24T20:17"
+  },
+  {
+    "id": 2,
+    "title": "death",
+    "description": "Current Affairs: Stay updated with the latest news and trends, as many questions are derived from recent events.\r\nGeography: Understand physical geography, including mountains, rivers, and world maps.\r\nHistory: Cover significant historical events, including Ancient, Medieval, and Modern history, as well as important dates and their relevance.\r\nPolitics: Familiarize yourself with the Constitution, political history, and current political leaders in your country.\r\n",
+    "status": "COMPLETED",
+    "priority": "HIGH",
+    "createdAt": "2025-10-19T20:19:50.597228700",
+    "updatedAt": "2025-10-19T20:20:06.783664100",
+    "dueDate": "2025-10-23T20:19",
+    "completedAt": "2025-10-19T20:20:06.783664100"
+  },
+  {
+    "id": 3,
+    "title": "hbyh",
+    "description": "Current Affairs: Stay updated with the latest news and trends, as many questions are derived from recent events.\r\nGeography: Understand physical geography, including mountains, rivers, and world maps.\r\nHistory: Cover significant historical events, including Ancient, Medieval, and Modern history, as well as important dates and their relevance.\r\nPolitics: Familiarize yourself with the Constitution, political history, and current political leaders in your country.\r\n\r\n",
+    "status": "IN_PROGRESS",
+    "priority": "LOW",
+    "createdAt": "2025-10-19T20:20:38.317295100",
+    "updatedAt": "2025-10-19T20:20:38.317295100",
+    "dueDate": "2025-09-15T20:20"
+  }
+]
